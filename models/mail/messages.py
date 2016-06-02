@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey
 from flask import url_for
 
-from email_auth.models.mail.base import TokenedPostMessage
+from .base import TokenedPostMessage
 
 class ConfirmEmailMessage(TokenedPostMessage): 
     __tablename__ = 'post_email_confirms'

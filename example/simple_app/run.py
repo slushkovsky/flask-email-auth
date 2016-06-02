@@ -5,8 +5,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import sys
 sys.path.append('../../../')
 
-from email_auth.models import init_email_auth
-from email_auth.routes import bp as bp_email_auth
+from flask_email_auth.models import init_email_auth
+from flask_email_auth.routes import bp as bp_email_auth
 
 app = Flask(__name__)
 app.config.from_object('settings')

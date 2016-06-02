@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
-from email_auth.utils import module_member, setting_name
+from ..utils import module_member, setting_name
 
 EAuthBase = declarative_base()
 
@@ -17,18 +17,20 @@ class _AppSession(EAuthBase):
     def _session(cls):
         return cls.app_session 
 
-from email_auth.models.mail import ConfirmEmailMessage, ResetPasswordMessage
-from email_auth.models.user import UserEmailAuth
+from .mail import ConfirmEmailMessage, ResetPasswordMessage
+from .user import UserEmailAuth
 
 def init_email_auth(app, db_session): 
     import os
     import sys
     import jinja2
     from flask_mail import Mail
-    
 
-    __import__('email_auth.default.base_config')
-    m = sys.modules['email_auth.default.base_config']
+    sys.path.append('../../')
+    DEFAULT_CONFIG = 'flask_email_auth.default.base_config'
+    
+    __import__(DEFAULT_CONFIG)
+    m = sys.modules[DEFAULT_CONFIG]
     merged_config = {k:getattr(m, k) for k in dir(m) if not k.startswith('__')}
     merged_config.update(app.config)
 

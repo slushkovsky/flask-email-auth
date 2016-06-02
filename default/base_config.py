@@ -1,10 +1,10 @@
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 EAUTH_FORMS = {
-	'register':      'email_auth.default.forms.RegisterForm', 
-	'login':         'email_auth.default.forms.LoginForm',
-	'reset_pass':    'email_auth.default.forms.ResetPasswordForm',
-	'request_reset': 'email_auth.default.forms.ForgotPasswordForm'
+	'register':      'flask_email_auth.default.forms.RegisterForm', 
+	'login':         'flask_email_auth.default.forms.LoginForm',
+	'reset_pass':    'flask_email_auth.default.forms.ResetPasswordForm',
+	'request_reset': 'flask_email_auth.default.forms.ForgotPasswordForm'
 } 
 
 EAUTH_TEMPLATES = {

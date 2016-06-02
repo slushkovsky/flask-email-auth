@@ -3,9 +3,9 @@ from flask_mail import Message
 from flask import render_template, current_app
 from sqlalchemy import Column, Integer, String, ForeignKey
 
-from email_auth.models import _AppSession
-from email_auth.models.orm import SQLAlchemyMixin
-from email_auth.models.user import UserEmailAuth
+from .. import _AppSession
+from ..orm import SQLAlchemyMixin
+from ..user import UserEmailAuth
 
 MESSAGE_TOKEN_LENGTH = 32
 

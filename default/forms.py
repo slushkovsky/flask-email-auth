@@ -3,8 +3,7 @@ from wtforms import StringField, PasswordField, DateField, SelectField, \
                     SubmitField, FormField
 from wtforms.validators import Required, Email, EqualTo, InputRequired
 
-from email_auth.forms import ModelForm, ModelField, EmailField, \
-                             ConfirmedPasswordForm
+from ..forms import ModelForm, ModelField, EmailField, ConfirmedPasswordForm
 
 # ConfirmPasswordField = FormField(ConfirmedPasswordForm)
 

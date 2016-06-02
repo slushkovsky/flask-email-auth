@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 
-from email_auth.models import _AppSession
-from email_auth.models.orm import SQLAlchemyMixin
+from . import _AppSession
+from .orm import SQLAlchemyMixin
 
 class UserMixin(object):
     id       = Column(Integer, primary_key=True, unique=True)

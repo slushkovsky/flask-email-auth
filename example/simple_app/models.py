@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String
 from sqlalchemy.ext.declarative import declarative_base
 
-from email_auth.models.user import UserMixin
+from flask_email_auth.models.user import UserMixin
 
 Base = declarative_base()
 
