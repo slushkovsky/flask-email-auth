@@ -3,6 +3,10 @@ BASE_URL = 'localhost:5000'
 SQLALCHEMY_DATABASE_URI = "sqlite:///./app.db"
 EAUTH_USER_MODEL = 'app.models.User'
 EAUTH_ENABLE_EMAIL_CONFIRM = False
+
+EAUTH_FORM_REGISTER = 'app.forms.RegisterForm'
+EAUTH_TEMPLATE_REGISTER = ('register.html', {})
+
 EAUTH_ON_FINISH = {
 	'register': '/'
 }

@@ -1,18 +1,14 @@
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
-EAUTH_FORMS = {
-	'register':      'flask_email_auth.default.forms.RegisterForm', 
-	'login':         'flask_email_auth.default.forms.LoginForm',
-	'reset_pass':    'flask_email_auth.default.forms.ResetPasswordForm',
-	'request_reset': 'flask_email_auth.default.forms.ForgotPasswordForm'
-} 
+EAUTH_FORM_REGISTER      = 'flask_email_auth.default.forms.RegisterFormMixin'
+EAUTH_FORM_LOGIN         = 'flask_email_auth.default.forms.LoginForm'
+EAUTH_FORM_RESET_PASS    = 'flask_email_auth.default.forms.ResetPasswordForm'
+EAUTH_FORM_REQUEST_RESET = 'flask_email_auth.default.forms.ForgotPasswordForm'
 
-EAUTH_TEMPLATES = {
-	'register':   ('register.html',    {}), 
-	'login':      ('login.html',           {}), 
-	'reset_pass': ('reset_password.html',  {}),
-	'req_reset':  ('forgot_password.html', {})
-}
+EAUTH_TEMPLATE_REGISTER      = ('register.html',        {})
+EAUTH_TEMPLATE_LOGIN         = ('login.html',           {})
+EAUTH_TEMPLATE_RESET_PASS    = ('reset_pass.html',      {})
+EAUTH_TEMPLATE_REQUEST_RESET = ('forgot_password.html', {}) 
 
 EAUTH_MAIL_CONFIRM_SUBJECT = 'Подтверждение регистрации'
 EAUTH_MAIL_RESET_SUBJECT   = 'Восстановление пароля'

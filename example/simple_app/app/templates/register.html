@@ -1,0 +1,31 @@
+<h1>Custom registration</h1>
+
+{% macro form_errors(field) -%}
+	{% for err in form.errors[field] %}
+		<span style="color: red;">{{err}}</span>
+	{% endfor %}
+{%- endmacro %}
+
+{% macro form_field(name) -%}
+	<tr> 
+		<td>{{ form[name].label }}</td>
+		<td>{{ form[name] }}</td>
+		{{ form_errors(name) }}
+	</tr>
+{%- endmacro %}
+
+<form method="POST">
+{{ form.hidden_tag() }}
+<table> 
+	{{ form_field('email') }}
+	{{ form_field('first_name') }}
+	{{ form_field('last_name') }}	
+	{{ form_field('password') }}
+	{{ form_field('confirm') }}
+
+	<tr>
+		<td></td>
+		<td>{{ form.submit }}</td>
+	</tr>
+</table> 
+</form>

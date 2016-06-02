@@ -20,11 +20,22 @@ class _AppSession(EAuthBase):
 from .mail import ConfirmEmailMessage, ResetPasswordMessage
 from .user import UserEmailAuth
 
+def _new_model(model, **kw): 
+    try: 
+        return model(**kw)
+    except TypeError as e: 
+        extra_kw_name = str(e).split(' ')[0].replace('\'', '')
+        kw = {k:v for k,v in kw.items() if k != extra_kw_name}
 
-def new_user(): 
-    user = UserEmailAuth.user_model()
+        return _new_model(model, **kw)
+
+
+def new_user(model_kw): 
+    user = _new_model(UserEmailAuth.user_model, **model_kw)
+
     _AppSession._session().add(user)
     _AppSession._session().commit()
+
     return user
 
 def init_email_auth(app, db_session): 

@@ -27,7 +27,7 @@ class EmailField(StringField):
 
 class ModelField(object): 
     def __new__(cls, model_col, field, *args, **kwargs):
-        field.model_col = model_col
+        field.kwargs = {'description': 'model_field: {}'.format(model_col)} 
         return field
 
 
@@ -44,9 +44,10 @@ class ModelForm(Form):
 
         for field_name, data in self.data.items():
             field = getattr(self, field_name)
-            model_filed_name = 'model_col'
+            descr = field.description
+            model_field_attr = 'model_field:'
 
-            if hasattr(field, model_filed_name):
-                model_kwargs[getattr(field, model_filed_name)] = data
+            if descr.startswith(model_field_attr):
+                model_kwargs[descr.replace(model_field_attr, '').strip()] = data
 
-        return self.model(**model_kwargs)
+        return model_kwargs

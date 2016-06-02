@@ -8,16 +8,16 @@ from ..forms import ModelForm, ModelField, EmailField, ConfirmedPasswordForm
 # ConfirmPasswordField = FormField(ConfirmedPasswordForm)
 
 class LoginForm(ModelForm): 
-    email    = ModelField('email',    EmailField   ,('Почта',  [Required()]))
-    password = ModelField('password', PasswordField,('Пароль', [Required()]))
+    email    = ModelField('email',    EmailField   ('Почта',  [Required()]))
+    password = ModelField('password', PasswordField('Пароль', [Required()]))
     
     submit = SubmitField('Войти')
 
 
-class RegisterForm(ModelForm): 
+class RegisterFormMixin(ModelForm): 
+    email    = ModelField('email',    EmailField('Электронная почта',  [Required()]))
     password = ModelField('password', PasswordField('Пароль', [Required(), EqualTo('confirm')]))
     confirm  = PasswordField('Подтверждение', [Required()])
-    email    = ModelField('email',    EmailField('Электронная почта',  [Required()]))
     
     submit = SubmitField('Далее')
 

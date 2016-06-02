@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, request, render_template, current_app
+from flask import Blueprint, render_template, redirect, request, current_app
 from flask.ext.login import login_required
 
 from .utils import module_member, filter_config, setting_name
@@ -12,7 +12,7 @@ bp = Blueprint('email_auth', __name__)
 
 
 def render_config_template(name, **kwargs):
-    template_config = current_app.config[setting_name('TEMPLATES')][name]
+    template_config = current_app.config[setting_name('TEMPLATE_' + name)]
     all_kw = template_config[1].copy()
     all_kw.update(kwargs)
 
@@ -28,10 +28,10 @@ def set_config():
     global ReqResetForm
     global ReqResetForm
 
-    ResisterForm  = module_member(bp.config['FORMS']['register'])
-    LoginForm     = module_member(bp.config['FORMS']['login'])
-    ReqResetForm  = module_member(bp.config['FORMS']['request_reset'])
-    ResetPassForm = module_member(bp.config['FORMS']['reset_pass'])
+    ResisterForm  = module_member(bp.config['FORM_REGISTER'])
+    LoginForm     = module_member(bp.config['FORM_LOGIN'])
+    ReqResetForm  = module_member(bp.config['FORM_REQUEST_RESET'])
+    ResetPassForm = module_member(bp.config['FORM_RESET_PASS'])
 
 
 @bp.route('/register', methods=['GET', 'POST'])
@@ -48,7 +48,7 @@ def register():
 
         return redirect(bp.config['ON_FINISH']['register'])
 
-    return render_config_template('register', form=form)
+    return render_config_template('REGISTER', form=form)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -61,7 +61,7 @@ def login():
         login_user(user)
         return redirect(request.args.get('next', bp.config['DEFAULT_AUTH_NEXT']))
 
-    return render_config_template('login', form=form)
+    return render_config_template('LOGIN', form=form)
 
 
 @bp.route('/forgot_password', methods=['POST'])
@@ -73,7 +73,7 @@ def forgot_password():
         request_pass_reset(form.email.data)
         return redirect(bp.config['ON_FINISH']['request_reset'])
 
-    return render_template('request_reset', form=form)
+    return render_template('REQUEST_RESET', form=form)
 
 
 @bp.route('/logout')
@@ -99,4 +99,4 @@ def reset_password(token):
     if form.validate_on_submit():
         return redirect(reset_password_by_msg(msg, form.passwrod.data))
 
-    return render_config_template('reset_pass', form=form)
+    return render_config_template('RESET_PASS', form=form)
