@@ -20,6 +20,13 @@ class _AppSession(EAuthBase):
 from .mail import ConfirmEmailMessage, ResetPasswordMessage
 from .user import UserEmailAuth
 
+
+def new_user(): 
+    user = UserEmailAuth.user_model()
+    _AppSession._session().add(user)
+    _AppSession._session().commit()
+    return user
+
 def init_email_auth(app, db_session): 
     import os
     import sys
@@ -48,8 +55,10 @@ def init_email_auth(app, db_session):
         jinja2.FileSystemLoader([__here('../default/templates/')]),
     ])
 
+    UserEmailAuth.user_model = User
+
     UserEmailAuth.user_id = Column(Integer, ForeignKey(User.id),
                                     nullable=False, index=True)
-    UserEmailAuth.user = relationship(User, backref=backref('email_auth',
-                                                             lazy='dynamic'))
+    # UserEmailAuth.user = relationship(User, backref=backref('email_auth',
+                                                             # lazy='dynamic'))
 

@@ -15,9 +15,9 @@ class LoginForm(ModelForm):
 
 
 class RegisterForm(ModelForm): 
-    password = ModelField('password', PasswordField, ('Пароль', [Required(), EqualTo('confirm')]))
+    password = ModelField('password', PasswordField('Пароль', [Required(), EqualTo('confirm')]))
     confirm  = PasswordField('Подтверждение', [Required()])
-    email    = ModelField('email',    EmailField, ('Электронная почта',  [Required()]))
+    email    = ModelField('email',    EmailField('Электронная почта',  [Required()]))
     
     submit = SubmitField('Далее')
 

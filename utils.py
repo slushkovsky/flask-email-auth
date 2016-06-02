@@ -1,7 +1,10 @@
 import sys
+from pprint import pprint
 
 SETTING_PREFIX = 'EAUTH'
 
+def values(entity): 
+	pprint({k: getattr(entity, k) for k in dir(entity) if not k.startswith('__')})
 
 def filter_config(configs):
     return {k.replace(SETTING_PREFIX + '_', ''): v for k, v in

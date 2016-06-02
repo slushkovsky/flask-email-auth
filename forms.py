@@ -19,18 +19,16 @@ class ConfirmedPasswordForm(Form):
 
 
 class EmailField(StringField):
-    def __init__(self, *args, **kwargs): 
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.validators.append(Email())
 
 
-class ModelField(Field): 
-    def __init__(self, model_col, field, field_args):
-        super().__init__(*field_args)
-        self.model_col = model_col
 
+class ModelField(object): 
     def __new__(cls, model_col, field, *args, **kwargs):
-        return super().__new__(field)
+        field.model_col = model_col
+        return field
 
 
 class ModelForm(Form): 
@@ -38,19 +36,17 @@ class ModelForm(Form):
         super().__init__(form_values)
         self.model = model
 
-    # def __new__(cls, *args, **kwargs): 
-        # return super().__new__(Form)
-
-    def exec_db(self, query): 
-        return query(self.collect_model())
+    def exec_db(self, f, *args, **kwargs): 
+        return f(self.collect_model(), *args, **kwargs)
 
     def collect_model(self):
         model_kwargs = {}
 
-        for field_name, data in self.data:
-            field = getattr(field_name, self)
+        for field_name, data in self.data.items():
+            field = getattr(self, field_name)
+            model_filed_name = 'model_col'
 
-            if ModelFiled in field.__bases__: 
-                model_kwargs[field.model_field] = data
+            if hasattr(field, model_filed_name):
+                model_kwargs[getattr(field, model_filed_name)] = data
 
         return self.model(**model_kwargs)

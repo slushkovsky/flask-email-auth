@@ -5,11 +5,10 @@ from .utils import module_member, filter_config, setting_name
 from .exc import except_errors
 from .models import UserEmailAuth
 from .actions import register_new_user, check_user, request_pass_reset, \
-                     confirm_user, reset_password_by_msg, get_reset_msg
+    confirm_user, reset_password_by_msg, get_reset_msg
 
 
 bp = Blueprint('email_auth', __name__)
-
 
 
 def render_config_template(name, **kwargs):
@@ -34,31 +33,30 @@ def set_config():
     ReqResetForm  = module_member(bp.config['FORMS']['request_reset'])
     ResetPassForm = module_member(bp.config['FORMS']['reset_pass'])
 
+
 @bp.route('/register', methods=['GET', 'POST'])
 @except_errors
 def register():
     form = ResisterForm(UserEmailAuth, request.form)
 
     if form.validate_on_submit():
-        print('OK')
-        user = form.exec_db(lambda user: register_new_user(user, 
-            with_confirm=bp.config['ENABLE_EMAIL_CONFIRM'],
-            next_url=request.args.get('next', bp.config['DEFAULT_AUTH_NEXT'])))
+        next_url = request.args.get('next', bp.config['DEFUALT_NEXT_URL'])
+
+        user = form.exec_db(register_new_user, 
+                            with_confirm=bp.config['ENABLE_EMAIL_CONFIRM'],
+                            next_url=next_url)
 
         return redirect(bp.config['ON_FINISH']['register'])
-
-    print('NOT OK')
-    print(form.errors)
 
     return render_config_template('register', form=form)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
 @except_errors
-def login(): 
+def login():
     form = LoginForm(UserEmailAuth, request.form)
 
-    if form.validate_on_submit(): 
+    if form.validate_on_submit():
         form.exec_db(check_user)
         login_user(user)
         return redirect(request.args.get('next', bp.config['DEFAULT_AUTH_NEXT']))
@@ -68,7 +66,7 @@ def login():
 
 @bp.route('/forgot_password', methods=['POST'])
 @except_errors
-def forgot_password(): 
+def forgot_password():
     form = ReqResetForm(request.form)
 
     if form.validate_on_submit():
@@ -76,7 +74,7 @@ def forgot_password():
         return redirect(bp.config['ON_FINISH']['request_reset'])
 
     return render_template('request_reset', form=form)
-  
+
 
 @bp.route('/logout')
 @except_errors
@@ -98,7 +96,7 @@ def reset_password(token):
     form = ResetPassForm(request.form)
     msg = get_reset_msg(token)
 
-    if form.validate_on_submit(): 
+    if form.validate_on_submit():
         return redirect(reset_password_by_msg(msg, form.passwrod.data))
 
     return render_config_template('reset_pass', form=form)

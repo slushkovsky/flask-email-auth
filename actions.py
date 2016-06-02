@@ -1,9 +1,12 @@
-from .models import UserEmailAuth, ConfirmEmailMessage, ResetPasswordMessage
+from .models import UserEmailAuth, ConfirmEmailMessage, ResetPasswordMessage, \
+    new_user
 from .exc import LoginFailError, WrongTokenError, InvalidUserIdError, \
     UnknownEmailError
 
 
 def register_new_user(user, with_confirm=True, next_url=None):
+    u = new_user()
+    user.user_id = u.id
     UserEmailAuth._add(user)
 
     if with_confirm:
