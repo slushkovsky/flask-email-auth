@@ -7,9 +7,10 @@ EAUTH_ENABLE_EMAIL_CONFIRM = False
 EAUTH_FORM_REGISTER = 'app.forms.RegisterForm'
 EAUTH_TEMPLATE_REGISTER = ('register.html', {})
 
-EAUTH_ON_FINISH = {
-	'register': '/'
-}
+EAUTH_ON_FINISH_REGISTER = '/'
+EAUTH_ON_FINISH_LOGOUT = '/login'
+EAUTH_ON_FINISH_REQUEST_RESET = '/'
+EAUTH_DEFUALT_NEXT_URL  = '/private'
 
 ENABLE_CSRF = True
 SECRET_KEY = 'some_secret'

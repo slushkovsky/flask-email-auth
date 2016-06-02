@@ -1,31 +1,16 @@
+{% extends 'eauth_mixins/register.html' %}
+
 <h1>Custom registration</h1>
 
-{% macro form_errors(field) -%}
-	{% for err in form.errors[field] %}
-		<span style="color: red;">{{err}}</span>
-	{% endfor %}
-{%- endmacro %}
-
-{% macro form_field(name) -%}
-	<tr> 
-		<td>{{ form[name].label }}</td>
-		<td>{{ form[name] }}</td>
-		{{ form_errors(name) }}
-	</tr>
-{%- endmacro %}
-
-<form method="POST">
-{{ form.hidden_tag() }}
-<table> 
-	{{ form_field('email') }}
-	{{ form_field('first_name') }}
-	{{ form_field('last_name') }}	
-	{{ form_field('password') }}
-	{{ form_field('confirm') }}
-
-	<tr>
-		<td></td>
-		<td>{{ form.submit }}</td>
-	</tr>
-</table> 
-</form>
+{% block extra_fields %}
+<tr>
+	<td>{{ form.first_name.label }}</td>
+	<td>{{ form.first_name }}</td>
+	<td>{{ field_errors(form, 'first_name') }}</td>	
+</tr>
+<tr>
+	<td>{{ form.last_name.label }}</td>
+	<td>{{ form.last_name }}</td>
+	<td>{{ field_errors(form, 'last_name') }}</td>	
+</tr>
+{% endblock %}

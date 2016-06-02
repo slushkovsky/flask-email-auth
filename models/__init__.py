@@ -17,6 +17,11 @@ class _AppSession(EAuthBase):
     def _session(cls):
         return cls.app_session 
 
+
+    @classmethod
+    def query(cls): 
+        return cls._session().query(cls)
+
 from .mail import ConfirmEmailMessage, ResetPasswordMessage
 from .user import UserEmailAuth
 

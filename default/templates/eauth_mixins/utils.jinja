@@ -1,0 +1,5 @@
+{% macro field_errors(form, field) -%}
+	{% if form.errors[field] | length > 0 %}
+	<span style="color: red;">{{ form.errors[field][0] }}</span>
+	{% endif %}
+{%- endmacro %}

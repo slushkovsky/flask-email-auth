@@ -30,3 +30,5 @@ class ResetPasswordForm(Form):
 class ForgotPasswordForm(Form): 
     email = EmailField('Почта', [Required()])
 
+    submit = SubmitField('Восстановить')
+

@@ -1,0 +1,24 @@
+{% from 'eauth_mixins/utils.jinja' import field_errors %}
+
+<h1>Login</h1>
+
+<form method='POST'>
+{{ form.hidden_tag() }}
+<table>
+	<tr>
+		<td>{{ form.email.label }}</td>
+		<td>{{ form.email }}</td>
+		<td>{{ field_errors(form, 'email')|safe }}</td> 
+	</tr>
+	<tr> 
+		<td>{{ form.password.label }}</td>
+		<td>{{ form.password }}</td>
+		<td>{{ field_errors(form, 'password')|safe }}</td> 
+	</tr>
+	<tr>
+		<td></td>
+		<td>{{ form.submit }}</td>
+		<td></td>
+	</tr>
+</table>
+</form>

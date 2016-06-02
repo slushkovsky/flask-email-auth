@@ -1,11 +1,12 @@
 from sqlalchemy import Column, String, Integer
+from flask.ext.login import UserMixin
 
 from app import db
 
 class Base(db.Model):
 	__abstract__ = True
 
-class User(Base):
+class User(Base, UserMixin):
 	__tablename__ = 'users'
 
 	id         = Column(Integer, primary_key=True, unique=True)

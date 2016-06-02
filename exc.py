@@ -1,7 +1,7 @@
 from functools import wraps
 
 class HttpException(Exception):
-    def http():
+    def http(self):
         return (self.msg, self.code)
 
 class WrongTokenError   (HttpException): code = 500; msg = 'Invalid token'

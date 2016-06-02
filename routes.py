@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, request, current_app
-from flask.ext.login import login_required
+from flask.ext.login import login_required, login_user, logout_user
 
 from .utils import module_member, filter_config, setting_name
 from .exc import except_errors
@@ -46,7 +46,7 @@ def register():
                             with_confirm=bp.config['ENABLE_EMAIL_CONFIRM'],
                             next_url=next_url)
 
-        return redirect(bp.config['ON_FINISH']['register'])
+        return redirect(bp.config['ON_FINISH_REGISTER'])
 
     return render_config_template('REGISTER', form=form)
 
@@ -57,23 +57,23 @@ def login():
     form = LoginForm(UserEmailAuth, request.form)
 
     if form.validate_on_submit():
-        form.exec_db(check_user)
+        user = form.exec_db(check_user)
         login_user(user)
-        return redirect(request.args.get('next', bp.config['DEFAULT_AUTH_NEXT']))
+        return redirect(request.args.get('next', bp.config['DEFUALT_NEXT_URL']))
 
     return render_config_template('LOGIN', form=form)
 
 
-@bp.route('/forgot_password', methods=['POST'])
+@bp.route('/forgot_password', methods=['GET', 'POST'])
 @except_errors
 def forgot_password():
     form = ReqResetForm(request.form)
 
     if form.validate_on_submit():
         request_pass_reset(form.email.data)
-        return redirect(bp.config['ON_FINISH']['request_reset'])
+        return redirect(bp.config['ON_FINISH_REQUEST_RESET'])
 
-    return render_template('REQUEST_RESET', form=form)
+    return render_config_template('REQUEST_RESET', form=form)
 
 
 @bp.route('/logout')
@@ -81,7 +81,7 @@ def forgot_password():
 def logout():
     logout_user()
 
-    return redirect(bp.config['ON_FINISH']['logout'])
+    return redirect(bp.config['ON_FINISH_LOGOUT'])
 
 
 @bp.route('/confirm_email/<token>')

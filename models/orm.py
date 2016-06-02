@@ -14,7 +14,7 @@ class SQLAlchemyMixin(object):
     @classmethod
     def _add(cls, instance):
         cls._session().add(instance)
-        cls._flush()
+        cls._session().commit()
         return instance
 
     @classmethod
