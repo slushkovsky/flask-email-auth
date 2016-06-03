@@ -32,10 +32,6 @@ class ModelField(object):
 
 
 class ModelForm(Form): 
-    def __init__(self, model, form_values):
-        super().__init__(form_values)
-        self.model = model
-
     def exec_db(self, f, *args, **kwargs): 
         return f(self.collect_model(), *args, **kwargs)
 

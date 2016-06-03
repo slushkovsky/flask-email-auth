@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
 
@@ -9,9 +9,10 @@ from .orm import SQLAlchemyMixin
 class UserEmailAuth(_AppSession, SQLAlchemyMixin, UserMixin): 
     __tablename__ = 'users_email_auth'
 
-    id       = Column(Integer, primary_key=True, unique=True)
-    password = Column(String(256))
-    email    = Column(String(256), index=True, unique=True)
+    id        = Column(Integer, primary_key=True, unique=True)
+    password  = Column(String(256))
+    email     = Column(String(256), index=True, unique=True)
+    confirmed = Column(Boolean, default=False)
 
     def __init__(self, user_id=None, email=None, password=None): 
         self.password = generate_password_hash(password)

@@ -37,7 +37,7 @@ def set_config():
 @bp.route('/register', methods=['GET', 'POST'])
 @except_errors
 def register():
-    form = ResisterForm(UserEmailAuth, request.form)
+    form = ResisterForm(request.form)
 
     if form.validate_on_submit():
         next_url = request.args.get('next', bp.config['DEFUALT_NEXT_URL'])
@@ -54,7 +54,7 @@ def register():
 @bp.route('/login', methods=['GET', 'POST'])
 @except_errors
 def login():
-    form = LoginForm(UserEmailAuth, request.form)
+    form = LoginForm(request.form)
 
     if form.validate_on_submit():
         user = form.exec_db(check_user)
