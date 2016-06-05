@@ -10,7 +10,7 @@ class ConfirmEmailMessage(TokenedPostMessage):
     id = Column(None, ForeignKey(TokenedPostMessage.id), primary_key=True)
 
     def get_link(self):
-        return self.get_hostname() + url_for('confirm_email', token=self.token)
+        return self.get_hostname() + url_for('email_auth.confirm_email', token=self.token)
 
     @classmethod
     def get_subject(cls): 
@@ -29,7 +29,7 @@ class ResetPasswordMessage(TokenedPostMessage):
     id = Column(None, ForeignKey(TokenedPostMessage.id), primary_key=True)
 
     def get_link(self): 
-        return self.get_hostname() + url_for('reset_password', token=self.token)
+        return self.get_hostname() + url_for('email_auth.reset_password', token=self.token)
 
     @classmethod
     def get_subject(cls): 

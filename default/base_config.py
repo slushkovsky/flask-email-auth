@@ -13,8 +13,8 @@ EAUTH_TEMPLATE_REQUEST_RESET = ('eauth_mixins/forgot_password.html', {})
 EAUTH_MAIL_CONFIRM_SUBJECT = 'Подтверждение регистрации'
 EAUTH_MAIL_RESET_SUBJECT   = 'Восстановление пароля'
 
-EAUTH_MAIL_CONFIRM_TEMPLATE = 'post/confirm_email.html'
-EAUTH_MAIL_RESET_TEMPLATE   = 'post/reset_pass.html'
+EAUTH_MAIL_CONFIRM_TEMPLATE = 'eauth_mixins/post/confirm_email.html'
+EAUTH_MAIL_RESET_TEMPLATE   = 'eauth_mixins/post/reset_pass.html'
 
 EAUTH_ON_FINISH_LOGOUT = '/login'
 EAUTH_ON_FINISH_REGISTER = '/login'

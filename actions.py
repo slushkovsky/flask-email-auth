@@ -8,8 +8,9 @@ from .exc import LoginFailError, WrongTokenError, InvalidUserIdError, \
 
 def register_new_user(model_kw, with_confirm=True, next_url=None):
     global_user = new_user(model_kw)
-    UserEmailAuth._add(UserEmailAuth(global_user.id, model_kw['email'], 
-                                     model_kw['password']))
+    user = UserEmailAuth(global_user.id, model_kw['email'], 
+                                     model_kw['password'])
+    UserEmailAuth._add(user)
 
     if with_confirm:
         ConfirmEmailMessage._new(user_id=user.id, next=next_url, autosend=True)
@@ -54,7 +55,7 @@ def get_reset_msg(token):
 
 def __get_user_by_msg(msg):
     try:
-        UserEmailAuth.query().filter_by(id=msg.user_id).one()
+        return UserEmailAuth.query().filter_by(id=msg.user_id).one()
     except sqlalchemy.orm.exc.NoResultFound:
         raise InvalidUserId()
 
@@ -65,7 +66,7 @@ def confirm_user(msg_token):
 
     user.confirmed = True
 
-    db.delete(msg)
+    msg._delete(msg)
 
     return msg.next
 

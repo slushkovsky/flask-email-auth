@@ -1,3 +1,4 @@
+from flask import current_app
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
@@ -16,6 +17,10 @@ class _AppSession(EAuthBase):
     @classmethod
     def _session(cls):
         return cls.app_session 
+
+    @classmethod
+    def setting(cls, name, general=False): 
+        return current_app.config[name if general else setting_name(name)]
 
 
     @classmethod
@@ -62,7 +67,7 @@ def init_email_auth(app, db_session):
     User = module_member(app.config[setting_name('USER_MODEL')])
     _AppSession._set_session(db_session)
     
-    mail = Mail(app)
+    app.mailer = Mail(app)
 
     __here = lambda path: os.path.normpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), path))
 

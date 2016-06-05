@@ -12,6 +12,11 @@ class SQLAlchemyMixin(object):
         return cls._add(cls(*args, **kwargs))
 
     @classmethod
+    def _delete(cls, instance): 
+        cls._session().delete(instance)
+        cls._session().commit()
+
+    @classmethod
     def _add(cls, instance):
         cls._session().add(instance)
         cls._session().commit()
